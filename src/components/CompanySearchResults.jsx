@@ -37,27 +37,37 @@ const CompanySearchResults = () => {
     <Container>
       <Row>
         <Col className="my-3">
-          <h1 className="display-4">Job posting for: {params.company}</h1>
+          <h1 className="display-6 text-center text-md-start">
+            Job posting for: {params.company}
+          </h1>
 
-          <Button
-            variant="outline-primary"
-            className="mt-2"
-            onClick={() =>
-              dispatch({
-                type: "ADD_TO_FAVORITES",
-                payload: params.company,
-              })
-            }
-          >
-            Aggiungi ai preferiti
-          </Button>
+          <div className="d-flex justify-content-center justify-content-md-start mb-4">
+            <Link to="/Favorites" className="btn btn-warning ">
+              ⭐ Vai ai Preferiti ({favorites.length})
+            </Link>
+          </div>
 
-          <Link to="/Favorites" className="btn btn-warning mb-4">
-            ⭐ Vai ai Preferiti ({favorites.length})
-          </Link>
-
+          {/* Qui cicliamo ogni job individualmente */}
           {jobs.map((jobData) => (
-            <Job key={jobData._id} data={jobData} />
+            <div key={jobData._id} className="border p-3 mb-3 rounded bg-light">
+              {/* Qui il componente o contenuto del job */}
+              <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
+                <Job data={jobData} />
+
+                {/* Bottone a destra */}
+                <Button
+                  variant="outline-primary"
+                  onClick={() =>
+                    dispatch({
+                      type: "ADD_TO_FAVORITES",
+                      payload: jobData,
+                    })
+                  }
+                >
+                  ⭐ Aggiungi ai preferiti
+                </Button>
+              </div>
+            </div>
           ))}
         </Col>
       </Row>
