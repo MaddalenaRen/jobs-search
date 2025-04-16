@@ -3,12 +3,7 @@ import { FaTrash } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 
 const Favorites = () => {
-  // BOSS FINALE: il componente Cart deve LEGGERE dallo store e INNESCARE
-  // la creazione di nuovi stati (eliminare i libri dal carrello!)
-
-  const preferiti = useSelector((state) => {
-    return state.cart.content; // l'array
-  });
+  const preferiti = useSelector((state) => state.favorites);
 
   const dispatch = useDispatch();
 
@@ -22,7 +17,7 @@ const Favorites = () => {
                 variant="danger"
                 onClick={() => {
                   dispatch({
-                    type: "REMOVE_FROM_CART",
+                    type: "REMOVE_FROM_FAVORITES",
                     payload: i,
                   });
                 }}
@@ -35,7 +30,6 @@ const Favorites = () => {
           ))}
         </ul>
       </Col>
-      <Row></Row>
     </Row>
   );
 };

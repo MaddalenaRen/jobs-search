@@ -1,6 +1,7 @@
 import { Container, Row, Col, Form } from "react-bootstrap";
 import Job from "./Job";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const MainSearch = () => {
   const dispatch = useDispatch();
@@ -50,6 +51,11 @@ const MainSearch = () => {
           <h1 className="display-1">Remote Jobs Search</h1>
         </Col>
         <Col xs={10} className="mx-auto">
+          <Col xs={10} className="mx-auto mb-3">
+            <Link to="/Favorites" className="btn btn-warning">
+              Vai ai Preferiti
+            </Link>
+          </Col>
           <Form onSubmit={handleSubmit}>
             <Form.Control
               type="search"
