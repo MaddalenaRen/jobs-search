@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 const Favorites = () => {
   const preferiti = useSelector((state) => state.favorites);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); //è un metodo di Redux che lancia un AZIONE(action) che viene catturata dal Redux
 
   return (
     <Row>
@@ -13,6 +13,7 @@ const Favorites = () => {
         <ul style={{ listStyle: "none" }}>
           {preferiti.map((preferito, i) => (
             <li key={i} className="my-4">
+              {preferito}
               <Button
                 variant="danger"
                 onClick={() => {
@@ -24,7 +25,6 @@ const Favorites = () => {
               >
                 <FaTrash />
               </Button>
-
               {preferito.title}
             </li>
           ))}

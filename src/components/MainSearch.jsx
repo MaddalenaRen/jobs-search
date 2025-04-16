@@ -38,12 +38,6 @@ const MainSearch = () => {
     }
   };
 
-  const handleAddToFavorites = (job) => {
-    dispatch({
-      type: "ADD_TO_FAVORITES",
-      payload: job,
-    });
-  };
   return (
     <Container>
       <Row>
@@ -51,11 +45,7 @@ const MainSearch = () => {
           <h1 className="display-1">Remote Jobs Search</h1>
         </Col>
         <Col xs={10} className="mx-auto">
-          <Col xs={10} className="mx-auto mb-3">
-            <Link to="/Favorites" className="btn btn-warning">
-              Vai ai Preferiti
-            </Link>
-          </Col>
+          <Col xs={10} className="mx-auto mb-3"></Col>
           <Form onSubmit={handleSubmit}>
             <Form.Control
               type="search"
@@ -65,13 +55,10 @@ const MainSearch = () => {
             />
           </Form>
         </Col>
+
         <Col xs={10} className="mx-auto mb-5">
           {jobs.map((jobData) => (
-            <Job
-              key={jobData._id}
-              data={jobData}
-              onAddToFavorites={handleAddToFavorites}
-            />
+            <Job key={jobData._id} data={jobData} />
           ))}
         </Col>
       </Row>

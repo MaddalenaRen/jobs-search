@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import Job from "./Job";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const CompanySearchResults = () => {
   const [jobs, setJobs] = useState([]);
   const params = useParams();
+  const dispatch = useDispatch();
+
+  const favorites = useSelector((state) => state.favorites);
 
   const baseEndpoint =
     "https://strive-benchmark.herokuapp.com/api/jobs?company=";
 
   useEffect(() => {
     getJobs();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getJobs = async () => {
@@ -34,6 +38,24 @@ const CompanySearchResults = () => {
       <Row>
         <Col className="my-3">
           <h1 className="display-4">Job posting for: {params.company}</h1>
+
+          <Button
+            variant="outline-primary"
+            className="mt-2"
+            onClick={() =>
+              dispatch({
+                type: "ADD_TO_FAVORITES",
+                payload: params.company,
+              })
+            }
+          >
+            Aggiungi ai preferiti
+          </Button>
+
+          <Link to="/Favorites" className="btn btn-warning mb-4">
+            ⭐ Vai ai Preferiti ({favorites.length})
+          </Link>
+
           {jobs.map((jobData) => (
             <Job key={jobData._id} data={jobData} />
           ))}
