@@ -1,10 +1,16 @@
 // questo file da il via alla configurazione di Redux nel nostro progetto
-import { configureStore } from '@reduxjs/toolkit'
-import mainReducer from '../reducers'
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import jobsReducer from '../reducers/jobsReducer';
+import favoritesReducer from '../reducers/favoritesReducer';
 
-const store = configureStore({
-  reducer: mainReducer, // qui vado a mettere il principale reducer dell'app
+const uniqueReducer = combineReducers({
+
+  jobs: jobsReducer,
+  favorites: favoritesReducer
 })
-
+const store= configureStore({
+  reducer:uniqueReducer
+})
 export default store
+
 // store è il "cuore" della nostra implementazione di Redux

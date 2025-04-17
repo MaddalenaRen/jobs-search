@@ -1,41 +1,24 @@
-import { Container, Row, Col, Form } from "react-bootstrap";
+import { Container, Row, Col, Form, Spinner } from "react-bootstrap";
 import Job from "./Job";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { setqueryAction, handleSubmitAction } from "../redux/actions";
 
 const MainSearch = () => {
   const dispatch = useDispatch();
 
-  const query = useSelector((state) => state.query);
-  const jobs = useSelector((state) => state.jobs);
-
-  const baseEndpoint =
-    "https://strive-benchmark.herokuapp.com/api/jobs?search=";
+  const query = useSelector((state) => state.jobs.query);
+  const jobs = useSelector((state) => state.jobs.jobs);
+  const isLoading = useSelector((state) => state.jobs.isLoading);
+  const isError = useSelector((state) => state.jobs.isError);
 
   const handleChange = (e) => {
-    dispatch({
-      type: "SET_QUERY",
-      payload: e.target.value,
-    });
+    dispatch(setqueryAction(e.target.value));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      const response = await fetch(baseEndpoint + query + "&limit=20");
-      if (response.ok) {
-        const { data } = await response.json();
-        dispatch({
-          type: "SET_JOBS",
-          payload: data,
-        });
-      } else {
-        alert("Error fetching results");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(handleSubmitAction());
   };
 
   return (
@@ -57,6 +40,8 @@ const MainSearch = () => {
         </Col>
 
         <Col xs={10} className="mx-auto mb-5">
+          {isLoading && <Spinner animation="border" variant="primary" />}
+          {isError && <p>Si è verificato un errore </p>}
           {jobs.map((jobData) => (
             <Job key={jobData._id} data={jobData} />
           ))}

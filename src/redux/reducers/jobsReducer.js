@@ -2,6 +2,8 @@
 // il reducer di Redux è una funzione pura che non manipola mai i suoi parametri
 // e ritorna sempre il NUOVO STATO per l'applicativo
 
+import { SET_ERROR, SET_JOBS, SET_LOADING, SET_QUERY } from "../actions";
+
 const initialState = {
   // qui inserisco lo stato iniziale dell'intera app!
   // poichè in questo stato condiviso tendono a finire tantissime proprietà
@@ -9,40 +11,43 @@ const initialState = {
   // per questo motivo si tende a dividerlo in "fette" (slices)
   query: "",
   jobs: [],
-  favorites: []
+  isLoading: false,
+  isError: false,
+ 
 }
 
 
-const mainReducer = (state = initialState, action) => {
+const jobsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "SET_QUERY":
+    case SET_QUERY:
       return {
         ...state,
         query: action.payload,
       };
 
-    case "SET_JOBS":
+    case SET_JOBS:
       return {
         ...state,
         jobs: action.payload,
       };
 
-    case "ADD_TO_FAVORITES":
-      return {
-        ...state,
-        favorites: [...state.favorites, action.payload],
-      };
+      case SET_LOADING:
+        return{
+          ...state,
+          isLoading:action.payload,
+        };
 
-    case "REMOVE_FROM_FAVORITES":
-      return {
-        ...state,
-        favorites: state.favorites.filter((job, i) => i !== action.payload),
-      };
+        case SET_ERROR:
+          return {
+            ...state,
+            isError:action.payload,
+          }
+
 
     default:
       return state;
   }
 };
 
-export default mainReducer;
+export default jobsReducer;
 

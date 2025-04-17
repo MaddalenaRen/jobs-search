@@ -4,6 +4,7 @@ import Job from "./Job";
 import { useParams, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { addtofavorites } from "../redux/actions";
 
 const CompanySearchResults = () => {
   const [jobs, setJobs] = useState([]);
@@ -57,12 +58,7 @@ const CompanySearchResults = () => {
                 {/* Bottone a destra */}
                 <Button
                   variant="outline-primary"
-                  onClick={() =>
-                    dispatch({
-                      type: "ADD_TO_FAVORITES",
-                      payload: jobData,
-                    })
-                  }
+                  onClick={() => dispatch(addtofavorites(jobData))}
                 >
                   ⭐ Aggiungi ai preferiti
                 </Button>

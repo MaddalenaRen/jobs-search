@@ -1,9 +1,11 @@
 import { Col, Row, Button } from "react-bootstrap";
 import { FaTrash } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
+import { removefromfavoritesAction } from "../redux/actions";
 
 const Favorites = () => {
   const preferiti = useSelector((state) => state.favorites);
+  console.log("Preferiti:", preferiti);
 
   const dispatch = useDispatch(); //è un metodo di Redux che lancia un AZIONE(action) che viene catturata dal Redux
 
@@ -25,10 +27,7 @@ const Favorites = () => {
               <Button
                 variant="danger"
                 onClick={() => {
-                  dispatch({
-                    type: "REMOVE_FROM_FAVORITES",
-                    payload: i,
-                  });
+                  dispatch(removefromfavoritesAction(i));
                 }}
               >
                 <FaTrash />
