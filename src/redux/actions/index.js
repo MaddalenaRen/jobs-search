@@ -58,6 +58,9 @@ export const handleSubmitAction =() =>{
             const response = await fetch(baseEndpoint + query + "&limit=20");
             if (response.ok) {
               const { data } = await response.json();
+              if (data.length === 0) {
+                alert("Nessun risultato trovato ");
+              }
               dispatch(setjobAction(data));
             } else {
               alert("Error fetching results");
